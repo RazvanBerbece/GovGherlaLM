@@ -10,7 +10,7 @@ on:
 
 jobs:
 
-  Check Tag:
+  Tag:
 
     name: Peek Next Version
     runs-on: ubuntu-latest
