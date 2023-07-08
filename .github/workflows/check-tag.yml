@@ -1,0 +1,29 @@
+# This file dry runs the tagging workflow of this repository (bumping tags) to check the next version of the codebase prior to release
+
+name: check-tag
+
+on:
+  pull_request:
+    branches: [ 'main' ]
+
+  workflow_dispatch:
+
+jobs:
+
+  Check Tag:
+
+    name: Peek Next Version
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v3
+      
+      # Check the next bumped, indexed tag through a dry run
+      - name: Dry Run Tag Action
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          dry_run: true
+    
