@@ -1,0 +1,2 @@
+# Raw Data
+The raw message data which was exported from Facebook Messenger resides in this folder. This data is fed into the `data_preprocess` component to be cleaned up, formatted and readied up to be used as input for the finetuning process.
