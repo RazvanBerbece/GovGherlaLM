@@ -14,3 +14,4 @@ messages = ParseRawFacebookHtmlData() \
 
 # Build list of prompts out of the extracted and cleaned messages
 # TODO
+print(messages)

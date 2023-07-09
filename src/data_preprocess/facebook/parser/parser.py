@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import natsort
 from bs4 import BeautifulSoup
 from .types.facebook_message import FacebookMessage
 from .filter.filter import Filter
@@ -37,13 +38,15 @@ class ParseRawFacebookHtmlData:
         message_container_class = "_3-95 _a6-g"
         author_in_container_class = "_2ph_ _a6-h _a6-i"
         content_in_container_class = "_2ph_ _a6-p"
-        timestamp_in_container_class = "_3-94 _a6-o"
 
         messages = []
 
-        # Iterate through each file
+        # Iterate through each file 
+        # Note: this is done in alphanumerical order (i.e.: message_1.html, message_2.html, ...)
+        # with lower numbers meaning more recent messages, which means in the end the messages will be in descending order
+        # in regards to their timestamp
         for parent in self.source_folders:
-            for filename in os.scandir(parent):
+            for filename in natsort.natsorted(os.scandir(parent), key=lambda x: x.name):
                 if filename.is_file():
                     if (self.debugging):
                         print(f"Parsing file {filename.name}")
@@ -70,9 +73,6 @@ class ParseRawFacebookHtmlData:
                         author_tags = container.find_all("div", class_=author_in_container_class)
                         for tag in author_tags:
                             message.author = tag.text
-
-                        # Extract timestamp of current sent message
-                        # TODO
                         
                         messages.append(message.get_dict())
         end = time.perf_counter()
