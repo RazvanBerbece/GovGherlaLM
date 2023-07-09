@@ -161,7 +161,8 @@ cython_debug/
 
 # Other
 .DS_Store
-data/clean/*
-!data/clean/README.md
-data/raw/*
-!data/raw/README.md
+data/facebook/clean/*
+!data/facebook/clean/README.md
+data/facebook/raw/*
+!data/facebook/raw/README.md
+src/misc/outputs/*
