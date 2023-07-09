@@ -1,7 +1,14 @@
-from .parser.parser import Parse
+from parser.parser import Parse
 
-prompts = Parse() \
+# Data Preprocessing Parameters
+raw_data_source_folder = "../../data/raw/facebook-100002107045945/messages/inbox/guvernulgherla_7283751518362871/"
+output_folder = "../../data/clean/"
+
+# Extract messages from raw data
+messages = Parse() \
     .from_source_folder("../../data/raw/facebook-100002107045945/messages/inbox/guvernulgherla_7283751518362871/") \
-    .to_output_folder("../../data/clean/") \
-    .with_filter_strategies([]) \
+    .and_debugging_enabled() \
     .execute()
+
+# Clean, filter and further process messages in list
+# TODO
