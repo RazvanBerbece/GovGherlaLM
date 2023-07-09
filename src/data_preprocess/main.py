@@ -1,4 +1,4 @@
-from facebook.parser.parser import Parse
+from facebook.parser.parser import ParseRawFacebookHtmlData
 
 # Data Preprocessing Parameters
 raw_data_source_folders = [
@@ -7,7 +7,7 @@ raw_data_source_folders = [
 output_folder = "../../data/facebook/clean/"
 
 # Extract messages from raw data
-messages = Parse() \
+messages = ParseRawFacebookHtmlData() \
     .from_source_folders(raw_data_source_folders) \
     .and_debugging_enabled() \
     .execute()

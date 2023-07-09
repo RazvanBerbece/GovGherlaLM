@@ -7,7 +7,7 @@ from .filter.filter import Filter
 
 sys.path.append("..")
 
-class Parse:
+class ParseRawFacebookHtmlData:
     """
     Class which handles parsing the exported facebook data from HTML to a list of FacebookMessages.
     """
