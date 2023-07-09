@@ -1,12 +1,14 @@
-from parser.parser import Parse
+from facebook.parser.parser import Parse
 
 # Data Preprocessing Parameters
-raw_data_source_folder = "../../data/facebook/raw/facebook-100002107045945/messages/inbox/guvernulgherla_7283751518362871/"
+raw_data_source_folders = [
+    "../../data/facebook/raw/facebook-100002107045945/messages/inbox/guvernulgherla_7283751518362871/"
+]
 output_folder = "../../data/facebook/clean/"
 
 # Extract messages from raw data
 messages = Parse() \
-    .from_source_folder(raw_data_source_folder) \
+    .from_source_folders(raw_data_source_folders) \
     .and_debugging_enabled() \
     .execute()
 
