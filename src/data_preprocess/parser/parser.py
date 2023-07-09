@@ -28,6 +28,7 @@ class Parse:
             2. build a list of dicts which represent the final clean data (the prompts to use for finetuning)
         """
         messages = []
+        filtered_messages = 0
 
         # Identifiers for parsing
         message_container_class = "_3-95 _a6-g"
@@ -40,6 +41,7 @@ class Parse:
             if filename.is_file():
                 if (self.debugging):
                     print(f"Parsing file {filename.name}")
+                    
                 # If the file exists, parse it using BeautifulSoup
                 html_content = open(self.source_folder + filename.name, "r")
                 soup = BeautifulSoup(html_content, "html.parser")
@@ -47,23 +49,29 @@ class Parse:
                 # For each sent message in the source HTML file
                 for container in message_containers:
                     message = FacebookMessage()
+
                     # Extract content of current sent message
                     content_tags = container.find_all("div", class_=content_in_container_class)
                     for tag in content_tags:                        
                         message.content = tag.text
+
                     # Skip if content is not suitable for finetuning
                     if Filter.should_skip(message.content):
+                        filtered_messages += 1
                         continue
+
                     # Extract author of current sent message
                     author_tags = container.find_all("div", class_=author_in_container_class)
                     for tag in author_tags:
                         message.author = tag.text
+
                     # Extract timestamp of current sent message
                     # TODO
-                    messages.append(message)
+                    
+                    messages.append(message.get_dict())
 
         if (self.debugging):
-            print(f"Extracted {len(messages)} messages")
+            print(f"Extracted {len(messages)} messages and filtered {filtered_messages}")
 
         return messages
     

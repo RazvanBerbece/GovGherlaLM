@@ -10,5 +10,5 @@ messages = Parse() \
     .and_debugging_enabled() \
     .execute()
 
-# Clean, filter and further process messages in list
+# Build list of prompts out of the extracted and cleaned messages
 # TODO
