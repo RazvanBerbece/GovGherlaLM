@@ -2,6 +2,7 @@ import os
 import sys
 from bs4 import BeautifulSoup
 from .types.facebook_message import FacebookMessage
+from .filter.filter import Filter
 
 sys.path.append("..")
 
@@ -10,15 +11,10 @@ class Parse:
     Class which handles parsing the exported facebook data from HTML to a list of FacebookMessages.
     """
     source_folder:  str = ""
-    filters:        list = []
     debugging:      bool = False
 
     def from_source_folder(self, source_folder):
         self.source_folder = source_folder
-        return self
-    
-    def with_filter_strategies(self, filters_list):
-        self.filters = filters_list
         return self
     
     def and_debugging_enabled(self):
@@ -51,18 +47,21 @@ class Parse:
                 # For each sent message in the source HTML file
                 for container in message_containers:
                     message = FacebookMessage()
+                    # Extract content of current sent message
+                    content_tags = container.find_all("div", class_=content_in_container_class)
+                    for tag in content_tags:                        
+                        message.content = tag.text
+                    # Skip if content is not suitable for finetuning
+                    if Filter.should_skip(message.content):
+                        continue
                     # Extract author of current sent message
                     author_tags = container.find_all("div", class_=author_in_container_class)
                     for tag in author_tags:
                         message.author = tag.text
-                    # Extract content of current sent message
-                    content_tags = container.find_all("div", class_=content_in_container_class)
-                    for tag in content_tags:
-                        message.content = tag.text
                     # Extract timestamp of current sent message
                     # TODO
                     messages.append(message)
-                    
+
         if (self.debugging):
             print(f"Extracted {len(messages)} messages")
 
