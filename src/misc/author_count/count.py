@@ -1,7 +1,7 @@
 import json
 import matplotlib.pyplot as plt
 
-def display_count_by_author_barchart(filepath_to_data, output_file):
+def generate_count_by_author_barchart(filepath_to_data, output_file):
 
     # Load JSON data
     f = open(filepath_to_data)

@@ -1,0 +1,2 @@
+wordcloud==1.9.2
+Pillow==9.5.0
