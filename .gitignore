@@ -165,3 +165,4 @@ data/facebook/clean/*
 !data/facebook/clean/README.md
 data/facebook/raw/*
 !data/facebook/raw/README.md
+src/misc/outputs/*
