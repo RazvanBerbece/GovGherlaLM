@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import natsort
+import json
 from bs4 import BeautifulSoup
 from .types.facebook_message import FacebookMessage
 from .filter.filter import Filter
@@ -14,16 +15,23 @@ class ParseRawFacebookHtmlData:
     """
     source_folders: list = []
     debugging:      bool = False
+    output_file:    str  = ""
+
+    messages:       list = []
 
     def from_source_folders(self, source_folders):
         self.source_folders = source_folders
+        return self
+    
+    def with_output_file(self, output_file):
+        self.output_file = output_file
         return self
     
     def and_debugging_enabled(self):
         self.debugging = True
         return self
     
-    def execute(self) -> list:
+    def execute(self):
         """
         Go through all the .html files at the source folder location and:
             1. extract the FacebookMessages according to the given filtering strategies
@@ -42,9 +50,8 @@ class ParseRawFacebookHtmlData:
         messages = []
 
         # Iterate through each file 
-        # Note: this is done in alphanumerical order (i.e.: message_13.html, message_12.html, ...)
-        # with lower numbers meaning more recent messages, which means in the end the messages will be in ascending order
-        # in regards to their timestamp
+        # Note: this is done in alphanumerical order (i.e.: message_1.html, message_2.html, ...)
+        # with lower numbers meaning more recent messages
         for parent in self.source_folders:
             for filename in natsort.natsorted(os.scandir(parent), key=lambda x: x.name):
                 if filename.is_file():
@@ -81,5 +88,14 @@ class ParseRawFacebookHtmlData:
         if (self.debugging):
             print(f"Extracted {len(messages)} messages and filtered {filtered_messages} in {end - start:0.4f}s")
 
-        return messages[::-1]
+        # Store the reverse so that the final list of messages is ordered ascending from oldest to newest message
+        self.messages = messages[::-1]
+
+        # Output to file if necessary
+        if self.output_file != "":
+            with open(os.getcwd() + "/" + self.output_file, "w+") as fout:
+                json.dump(self.messages, fout, ensure_ascii=False)
+
+        return self.messages
+        
     
