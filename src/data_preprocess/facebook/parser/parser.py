@@ -42,8 +42,8 @@ class ParseRawFacebookHtmlData:
         messages = []
 
         # Iterate through each file 
-        # Note: this is done in alphanumerical order (i.e.: message_1.html, message_2.html, ...)
-        # with lower numbers meaning more recent messages, which means in the end the messages will be in descending order
+        # Note: this is done in alphanumerical order (i.e.: message_13.html, message_12.html, ...)
+        # with lower numbers meaning more recent messages, which means in the end the messages will be in ascending order
         # in regards to their timestamp
         for parent in self.source_folders:
             for filename in natsort.natsorted(os.scandir(parent), key=lambda x: x.name):
@@ -73,12 +73,13 @@ class ParseRawFacebookHtmlData:
                         author_tags = container.find_all("div", class_=author_in_container_class)
                         for tag in author_tags:
                             message.author = tag.text
-                        
+                    
                         messages.append(message.get_dict())
+
         end = time.perf_counter()
 
         if (self.debugging):
             print(f"Extracted {len(messages)} messages and filtered {filtered_messages} in {end - start:0.4f}s")
 
-        return messages
+        return messages[::-1]
     
