@@ -1,9 +1,11 @@
 import json
 import matplotlib.pyplot as plt
-from .filter import get_corpus_without_stopwords
+from utils.filter.filter import get_corpus_without_stopwords
 from wordcloud import WordCloud, STOPWORDS
 
 def generate_word_cloud(filepath_to_data, output_file, include_names=True):
+
+    print(f"Generating and storing word cloud to {output_file}")
 
     # Load JSON data containing all available messages
     f = open(filepath_to_data)
@@ -27,5 +29,3 @@ def generate_word_cloud(filepath_to_data, output_file, include_names=True):
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
     wordcloud.to_file(output_file)
-
-    print(f"Saved word cloud to {output_file}")
