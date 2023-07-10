@@ -7,24 +7,15 @@ def generate_count_by_author_barchart(filepath_to_data, output_file):
     f = open(filepath_to_data)
     messages = json.load(f)
 
-    # Initial dictionary holding keys and values for message counts
-    results = {
-        "Marco": 0,
-        "Antonio": 0,
-        "Maco": 0,
-        "Nino": 0
-    }
+    # Initial dictionary holding keys and values for author and message counts
+    results = {}
 
     # Calculate the message counts per author
     for message in messages:
-        if message["author"] == "Alex Macovei":
-            results["Maco"] += 1
-        elif message["author"] == "Nino Matase":
-            results["Nino"] += 1
-        elif message["author"] == "Antonio Berbece":
-            results["Antonio"] += 1
-        elif message["author"] == "Petruca Marco":
-            results["Marco"] += 1
+        if message["author"] in results:
+            results[message["author"]] += 1
+        else:
+            results[message["author"]] = 0
     
     # Store barchart
     plt.title("Message Counts by Author")

@@ -10,4 +10,4 @@ word_cloud_output_file = "outputs/word_cloud.png"
 
 # Generate outputs
 generate_count_by_author_barchart(message_data_filepath, count_barchart_output_file)
-generate_word_cloud(message_data_filepath, word_cloud_output_file)
+generate_word_cloud(message_data_filepath, word_cloud_output_file, include_names=False)
