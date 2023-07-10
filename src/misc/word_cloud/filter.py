@@ -2,6 +2,13 @@ import os
 import re
 
 def get_corpus_without_stopwords(corpus: str, with_names=True) -> str:
+    """
+    Returns a joined string containing only the useful words of the corpus.
+    
+    *Note:* If one wants to remove names as well from the corpus, one should create a file `names.txt` in
+    the `stopwords` folder which contains lowercased 1 word names, each one on a new line in the file, and
+    also set the `with_names` argument to `False`.
+    """
 
     # Build list of words to be removed from corpus out of the provided files holding stopword lists
     stopwords = []
