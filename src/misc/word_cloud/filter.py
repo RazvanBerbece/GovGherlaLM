@@ -1,8 +1,9 @@
 import os
+import re
 
-def get_corpus_without_linking_words(corpus, with_names=True):
+def get_corpus_without_stopwords(corpus: str, with_names=True) -> str:
 
-    # Build list of words to be removed from corpus from provided files holding stopword lists
+    # Build list of words to be removed from corpus out of the provided files holding stopword lists
     stopwords = []
     for filename in os.scandir("word_cloud/stopwords/"):
         stopwords_filepath = "word_cloud/stopwords/" + filename.name
@@ -13,15 +14,10 @@ def get_corpus_without_linking_words(corpus, with_names=True):
             lines = [line.rstrip() for line in file]
             stopwords.extend(lines)
     
-    print(stopwords)
+    # Build a list of words from the corpus minus the stopwords
+    clean_words = [ word for word in re.split("\W+", corpus) if word.lower() not in stopwords and len(word) > 1 ]
 
-    # Tokenise corpus
-    tokens = corpus.split()
+    # Build the clean corpus by joining all clean words with spaces
+    final_corpus = " ".join(clean_words)
 
-    # Build list of words out of words which are not stopwords
-    words = [word for word in tokens if word.lower() not in stopwords and len(word) > 1]
-
-    # Build corpus out of resulted list
-    results = ' '.join(words)
-
-    return results
+    return final_corpus
