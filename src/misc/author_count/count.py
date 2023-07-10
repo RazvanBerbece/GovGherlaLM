@@ -17,7 +17,7 @@ def generate_count_by_author_barchart(filepath_to_data, output_file):
         else:
             results[message["author"]] = 0
     
-    # Store barchart
+    # Plot and store barchart
     plt.title("Message Counts by Author")
     plt.bar(*zip(*results.items()))
     plt.savefig(output_file)

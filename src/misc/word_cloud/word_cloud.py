@@ -22,7 +22,7 @@ def generate_word_cloud(filepath_to_data, output_file, include_names=True):
     wordcloud = WordCloud(width = 3000, height = 2000, random_state=1, background_color='black', colormap='Set2', collocations=False, stopwords=STOPWORDS) \
         .generate(clean_corpus)
     
-    # Plot
+    # Plot and store to output file
     plt.title("Word Cloud")
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
