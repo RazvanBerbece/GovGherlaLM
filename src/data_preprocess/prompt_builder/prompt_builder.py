@@ -4,15 +4,17 @@ from .types.prompt import Prompt
 
 class PromptBuilder:
 
-    messages = []
-    authors = []
-    prompts = []
-
-    def __init__(self, messages = [], authors = []):
+    def __init__(self):
+        self.messages = []
+        self.authors = []
+        self.prompts = []
+    
+    def with_messages_and_authors(self, messages: list, authors: list):
         self.messages = messages
         self.authors = authors
+        return self
     
-    def with_messages_from_file(self, filepath: str):
+    def with_messages_and_authors_from_file(self, filepath: str):
         print(f"Reading message data from {filepath}")
         f = open(os.getcwd() + "/" + filepath)
         self.messages = json.load(f)
