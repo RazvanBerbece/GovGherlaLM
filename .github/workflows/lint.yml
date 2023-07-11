@@ -29,7 +29,7 @@ jobs:
         run: pip install black black[jupyter] flake8 isort
 
       - name: lint isort
-        run: isort --recursive --check --diff .
+        run: isort --check --diff .
 
       - name: lint black
         run: black --check --diff .
