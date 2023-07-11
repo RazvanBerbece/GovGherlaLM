@@ -5,19 +5,22 @@ name: Lint
 on:
   push:
     branches:
-      - [ 'main' ]
+      - 'main'
   pull_request:
     branches:
       - [ '*' ]
 
 jobs:
-  run-linters:
+
+  Lint:
+
     name: Run linters
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v1
