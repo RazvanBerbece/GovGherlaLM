@@ -18,7 +18,9 @@ prompts_output_file = "../../data/facebook/clean/prompts/prompts.json"
 #     .execute() \
 
 # Build list of prompts out of the extracted and cleaned messages
-prompts = PromptBuilder() \
-    .with_messages_and_authors_from_file(clean_messages_list_output_file) \
-    .build_prompts() \
+prompts = (
+    PromptBuilder()
+    .with_messages_and_authors_from_file(clean_messages_list_output_file)
+    .build_prompts()
     .output_to_file(prompts_output_file)
+)

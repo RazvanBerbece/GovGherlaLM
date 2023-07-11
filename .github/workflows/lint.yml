@@ -1,0 +1,34 @@
+# This file runs the linter on the current diff
+
+name: Lint
+
+on:
+  push:
+    branches:
+      - [ 'main' ]
+  pull_request:
+    branches:
+      - [ '*' ]
+
+jobs:
+  run-linters:
+    name: Run linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install Python dependencies
+        run: pip install black black[jupyter] flake8 isort
+
+      - name: lint isort
+        run: isort --check --diff .
+
+      - name: lint black
+        run: black --check --diff .
