@@ -1,6 +1,6 @@
 # This file runs the linter on the current diff
 
-name: Lint
+name: lint
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
 
-  lint:
+  Lint:
 
     name: Run Linters
     runs-on: ubuntu-latest

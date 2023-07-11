@@ -1,6 +1,5 @@
 from author_count.count import generate_count_by_author_barchart
-from most_used_word_by_author.most_used import \
-    generate_most_used_word_per_author
+from most_used_word_by_author.most_used import generate_most_used_word_per_author
 from word_cloud.word_cloud import generate_word_cloud
 
 # Source folders
