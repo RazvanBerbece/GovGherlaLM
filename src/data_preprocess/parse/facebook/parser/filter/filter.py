@@ -13,7 +13,9 @@ class Filter:
             r"^You started a video chat\.(.*)$",
             r"^.+ started a video chat\.(.*)$",
             r"^You started sharing video.",
-            r"^.+ started sharing video\.$"
+            r"^.+ started sharing video\.$",
+            r"^Click for audio",
+            r"^Click for video:"
         ]
         for pattern in patterns:
             if re.match(pattern, message):

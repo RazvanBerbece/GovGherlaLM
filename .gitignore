@@ -166,3 +166,4 @@ data/facebook/clean/*
 data/facebook/raw/*
 !data/facebook/raw/README.md
 src/misc/outputs/*
+src/misc/utils/filter/stopwords/names.txt

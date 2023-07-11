@@ -6,6 +6,7 @@ import json
 from bs4 import BeautifulSoup
 from .types.facebook_message import FacebookMessage
 from .filter.filter import Filter
+from .cleaner.cleaner import get_facebook_message_without_reactions
 
 sys.path.append("..")
 
@@ -18,6 +19,7 @@ class ParseRawFacebookHtmlData:
     output_file:    str  = ""
 
     messages:       list = []
+    authors:        list = []
 
     def from_source_folders(self, source_folders):
         self.source_folders = source_folders
@@ -71,6 +73,9 @@ class ParseRawFacebookHtmlData:
                         for tag in content_tags:                        
                             message.content = tag.text
 
+                        # Cleanup content of noise
+                        message.content = get_facebook_message_without_reactions(message.content)
+
                         # Skip if content is not suitable for finetuning
                         if Filter.should_skip(message.content):
                             filtered_messages += 1
@@ -80,6 +85,10 @@ class ParseRawFacebookHtmlData:
                         author_tags = container.find_all("div", class_=author_in_container_class)
                         for tag in author_tags:
                             message.author = tag.text
+                        
+                        # Add author to list of discovered authors (useful to know at prompt building time)
+                        if message.author not in self.authors:
+                            self.authors.append(message.author)
                     
                         messages.append(message.get_dict())
 
@@ -94,8 +103,6 @@ class ParseRawFacebookHtmlData:
         # Output to file if necessary
         if self.output_file != "":
             with open(os.getcwd() + "/" + self.output_file, "w+") as fout:
-                json.dump(self.messages, fout, ensure_ascii=False)
+                json.dump(self.messages, fout, indent=2, ensure_ascii=False)
 
-        return self.messages
-        
-    
+        return self
