@@ -1,9 +1,12 @@
 import json
+
 import matplotlib.pyplot as plt
 
-def generate_count_by_author_barchart(filepath_to_data, output_file):
 
-    print(f"Generating and storing total message count by author barchart to {output_file}")
+def generate_count_by_author_barchart(filepath_to_data, output_file):
+    print(
+        f"Generating and storing total message count by author barchart to {output_file}"
+    )
 
     # Load JSON data
     f = open(filepath_to_data)
@@ -18,7 +21,7 @@ def generate_count_by_author_barchart(filepath_to_data, output_file):
             results[message["author"]] += 1
         else:
             results[message["author"]] = 0
-    
+
     # Plot and store barchart
     plt.title("Message Counts by Author")
     plt.bar(*zip(*results.items()))
