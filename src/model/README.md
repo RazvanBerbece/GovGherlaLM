@@ -1,0 +1,2 @@
+# Model
+This folder contains both documentation and placeholder locations for model related files used as part of the project. Because models can be quite large and also under various licenses, they won't be staged for commits. Thus, this scope can be used to contain model files as seen fit by the user.
